@@ -32,7 +32,7 @@ class AuthController {
         if(userexist){
 
           res.status(200).json({
-            success:"true",
+            success:"true",          
             id:id,
             message:"User exist with id"
           })

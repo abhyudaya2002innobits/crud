@@ -50,21 +50,29 @@ class AuthService{
 
     async deleteUser(userEmail: any) {
         try {
+            let Email = await Users.findOne({
+                where: {
+                    email:userEmail
+                } 
+            })
+            if(Email){
+                console.log("email exist")
+                
+            }
 
+            
             let userDelete = await Users.destroy({
                 where: {
                     email: userEmail
                 }
             });
-            
+            return Promise.resolve("user deleted successfully")
     
-            if (userDelete) {
+            // if (!userDelete) {
             
-                return Promise.resolve("User deleted");
-            } else {
                 
-                return Promise.resolve("No user found with the specified email");
-            }
+            // }
+            
         } catch (error) {
             console.log(`Error occurred: ${error}`);
             return Promise.reject("Error occurred at deletion");
