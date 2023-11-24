@@ -75,17 +75,20 @@ async deleteUser(req: Request, res: Response) {
 async logInController(req:Request,res:Response){
   try{
     console.log(req.body,">>>>>>")
-    let object=req.body
-    // let object={email,password}
-    let result=await this.authService.loginUser(object)
-  if(result){
+    let {UserName,password}=req.body
+    // let object={email}
+    let result=await this.authService.loginUser(UserName,password)
+
+    if(result){
     res.status(200).json({
       success:"True",
       message:"LogedIn Successfull"
-    })
-  }
+      })
+    }
+    
 
   }catch(error){
+    console.log(`${error}`)
     res.status(400).json({
       success:"False",
       message:"No user found"

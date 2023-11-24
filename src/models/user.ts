@@ -16,6 +16,7 @@ class Users extends Model<UserAttributes> {
     password: any;
     id: any;
     static id: any;
+    UserName: any;
 }
 
 Users.init(

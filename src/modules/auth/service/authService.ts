@@ -3,6 +3,14 @@ import  Users  from "../../../models/user";
 
 
 class AuthService{
+    static signinwithemail(object: {
+        id: string; // signinwithemail: any;
+        // signinwithemail: any;
+        UserNAme: string; password: string;
+    }) {
+        throw new Error("Method not implemented.");
+    }
+    id: any;
     // signinwithemail: any;
     constructor(){
         this.signinwithemail=this.signinwithemail.bind(this)
@@ -16,10 +24,11 @@ class AuthService{
     async signinwithemail(object:any){
         try{
             let CreateUSer=await Users.create(object)
-            return Promise.resolve("USer created successfully")
+            console.log(CreateUSer)
+            return Promise.resolve("User created successfully")
             
         }catch(error:any){
-            return Promise.reject(error);
+            return Promise.reject(`error occured ${error}`);
         }
 
 
@@ -37,7 +46,8 @@ class AuthService{
             if(!readUser){
                 return "User with id not found"
             }
-            if(readUser.id==Users.id){
+            if(readUser.id==userId.id){
+                console.log("mil gaya")
                 return Promise.resolve("User exist with details")
             }
             
@@ -47,7 +57,6 @@ class AuthService{
 
         }
     }
-
     async deleteUser(userEmail: any) {
         try {
             let Email = await Users.findOne({
@@ -66,6 +75,7 @@ class AuthService{
                     email: userEmail
                 }
             });
+            console.log("email deleted")
             return Promise.resolve("user deleted successfully")
     
             // if (!userDelete) {
@@ -78,25 +88,25 @@ class AuthService{
             return Promise.reject("Error occurred at deletion");
         }
     }
-    async loginUser(object:any){
+    async loginUser(UserName:string,password:string){
 
         try{
             let userExist=await Users.findOne({
                 where:{
-                    email:object.email,
+                    UserName:UserName
+                    
+
+                    
                 
                 }
             })
             
-            if(!userExist){
-                return `User with email dosen't exist`
+            if(userExist){
+                return Promise.resolve("USer exist")
             }
-            if(object.password!=userExist.password){
-                return `Password not matched`
-            }
-            if(userExist && (object.password==userExist.password)){
-                return Promise.resolve("User LogedIn successfully")
-            }
+
+        
+            
         }catch(error:any){
             console.log(`error occured ${error}`)
             return Promise.reject("Error occured during LogedIN")
